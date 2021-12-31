@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 import filecmp
 import os
 
@@ -9,8 +9,11 @@ LINK = "1~{0}	/~{0}	tilde.club	70"
 
 for user in users():
     if os.path.exists(f"/home/{user}/public_gopher/gophermap"):
-        if not filecmp.cmp(
-                "/etc/skel/public_gopher/gophermap", 
-                f"/home/{user}/public_gopher/gophermap", shallow=False):
-            print(LINK.format(user))
+        try:
+            if not filecmp.cmp(
+                    "/etc/skel/public_gopher/gophermap",
+                    f"/home/{user}/public_gopher/gophermap", shallow=False):
+                print(LINK.format(user))
+        except IOError:
+            pass
 
